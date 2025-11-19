@@ -3,8 +3,11 @@ import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 
 export default defineConfig({
-  base: '/Elite-Barbershop-Website/', // Your GitHub repo name
+  base: '/Elite-Babershop-Website/', // corrected to match actual repo name
   plugins: [react()],
+  optimizeDeps: {
+    include: ['framer-motion'],
+  },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     alias: {

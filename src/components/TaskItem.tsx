@@ -1,5 +1,5 @@
 import { useState, forwardRef } from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Trash2, Edit2, Calendar, Check, X, ChevronDown, ChevronUp } from "lucide-react";
 import { Checkbox } from "./ui/checkbox";
 import { Badge } from "./ui/badge";
