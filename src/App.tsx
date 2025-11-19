@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { ImageWithFallback } from './components/figma/ImageWithFallback.js';
 import { Button } from './components/ui/button.js';
 import { Card, CardContent } from './components/ui/card.js';

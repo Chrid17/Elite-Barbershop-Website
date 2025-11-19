@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { TaskItem, Task } from "./TaskItem";
 import { CheckCircle2 } from "lucide-react";
 
