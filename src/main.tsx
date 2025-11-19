@@ -3,15 +3,14 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
 
-// --- add the providers you actually use ---
-import { ThemeProvider } from 'next-themes'   // example
-import { Toaster } from 'sonner'              // example
+import { ThemeProvider } from 'next-themes'
+import { Toaster } from 'sonner'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider attribute="class">
       <App />
-      <Toaster />          {/* put Toaster (or any other global) here */}
+      <Toaster position="top-center" richColors />
     </ThemeProvider>
   </React.StrictMode>,
 )
