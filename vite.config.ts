@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 
 export default defineConfig({
-  base: '/Elite-Babershop-Website/', // Your GitHub repo name
+  base: '/Elite-Barbershop-Website/', // Your GitHub repo name
   plugins: [react()],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
