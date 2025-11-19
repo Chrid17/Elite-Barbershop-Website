@@ -8,6 +8,11 @@ import { BookingDialog } from './components/BookingDialog.js';
 import { GalleryLightbox } from './components/GalleryLightbox.js';
 import { BeforeAfterSlider } from './components/BeforeAfterSlider.js';
 
+
+/* === KEEP PROVIDERS ALIVE === */
+import { useTheme } from 'next-themes';
+import { Toaster } from 'sonner';
+
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
