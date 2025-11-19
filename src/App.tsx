@@ -1,12 +1,12 @@
 import { motion } from 'motion/react';
-import { ImageWithFallback } from './components/figma/ImageWithFallback';
-import { Button } from './components/ui/button';
-import { Card, CardContent } from './components/ui/card';
+import { ImageWithFallback } from './components/figma/ImageWithFallback.js';
+import { Button } from './components/ui/button.js';
+import { Card, CardContent } from './components/ui/card.js';
 import { Scissors, Clock, Star, Phone, MapPin, Mail, Menu, X, Award, Users, ThumbsUp, Instagram, Facebook, Twitter } from 'lucide-react';
 import { useState } from 'react';
-import { BookingDialog } from './components/BookingDialog';
-import { GalleryLightbox } from './components/GalleryLightbox';
-import { BeforeAfterSlider } from './components/BeforeAfterSlider';
+import { BookingDialog } from './components/BookingDialog.js';
+import { GalleryLightbox } from './components/GalleryLightbox.js';
+import { BeforeAfterSlider } from './components/BeforeAfterSlider.js';
 
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
