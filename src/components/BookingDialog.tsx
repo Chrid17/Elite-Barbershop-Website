@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Button } from './ui/button';
 import { Calendar } from './ui/calendar';
@@ -28,9 +28,42 @@ export function BookingDialog({ open, onOpenChange, services }: BookingDialogPro
     '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM', '5:00 PM', '5:30 PM',
     '6:00 PM', '6:30 PM', '7:00 PM', '7:30 PM'
   ];
+  // persisted bookings stored in localStorage
+  const [bookings, setBookings] = useState<Array<{ dateISO: string; time: string; service: string; name: string }>>([]);
 
-  // Randomly mark some slots as booked for demonstration
-  const bookedSlots = ['10:00 AM', '2:00 PM', '4:30 PM', '6:00 PM'];
+  // helper to parse a time slot + date into a Date object
+  const parseTimeSlot = (date: Date, time: string) => {
+    const [timePart, meridiem] = time.split(' ');
+    const [hourStr, minStr] = timePart.split(':');
+    let hour = parseInt(hourStr, 10);
+    const minute = parseInt(minStr, 10);
+    if (meridiem.toUpperCase() === 'PM' && hour !== 12) hour += 12;
+    if (meridiem.toUpperCase() === 'AM' && hour === 12) hour = 0;
+    const d = new Date(date);
+    d.setHours(hour, minute, 0, 0);
+    return d;
+  };
+
+  const isSameDate = (a: Date, b: Date) => a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+
+  // Load bookings from localStorage when dialog opens and clean expired bookings
+  useEffect(() => {
+    if (!open) return;
+    try {
+      const raw = localStorage.getItem('bookings');
+      const parsed = raw ? JSON.parse(raw) : [];
+      const now = new Date();
+      const valid = parsed.filter((b: any) => {
+        const bookingDate = new Date(b.dateISO);
+        const bookingDateTime = parseTimeSlot(bookingDate, b.time);
+        return bookingDateTime > now;
+      });
+      setBookings(valid);
+      localStorage.setItem('bookings', JSON.stringify(valid));
+    } catch (e) {
+      setBookings([]);
+    }
+  }, [open]);
 
   const handleNext = () => {
     if (step === 1 && selectedService) setStep(2);
@@ -46,6 +79,18 @@ export function BookingDialog({ open, onOpenChange, services }: BookingDialogPro
     // Here you would send the booking data to your backend
     alert(`Booking confirmed!\n\nService: ${selectedService}\nDate: ${selectedDate?.toLocaleDateString()}\nTime: ${selectedTime}\nName: ${formData.name}`);
     onOpenChange(false);
+    // persist booking locally (so it's shown as booked until the time passes)
+    try {
+      const dateISO = (selectedDate ?? new Date()).toISOString();
+      const newBooking = { dateISO, time: selectedTime, service: selectedService, name: formData.name };
+      const raw = localStorage.getItem('bookings');
+      const parsed = raw ? JSON.parse(raw) : [];
+      const merged = [...parsed, newBooking];
+      localStorage.setItem('bookings', JSON.stringify(merged));
+      setBookings(merged);
+    } catch (e) {
+      // ignore localStorage errors
+    }
     // Reset form
     setStep(1);
     setSelectedService('');
@@ -56,22 +101,22 @@ export function BookingDialog({ open, onOpenChange, services }: BookingDialogPro
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-neutral-900 text-white border-neutral-700">
+      <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto bg-card text-card-foreground border-card my-8 pt-12">
         <DialogHeader>
           <DialogTitle className="text-2xl">Book Your Appointment</DialogTitle>
         </DialogHeader>
 
         {/* Progress Indicator */}
         <div className="flex items-center justify-center gap-2 mb-6">
-          <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 1 ? 'bg-amber-500 text-neutral-900' : 'bg-neutral-800'}`}>
+          <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 1 ? 'bg-amber-500 text-primary-foreground' : 'bg-card'}`}>
             1
           </div>
-          <div className={`h-1 w-12 ${step >= 2 ? 'bg-amber-500' : 'bg-neutral-800'}`}></div>
-          <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 2 ? 'bg-amber-500 text-neutral-900' : 'bg-neutral-800'}`}>
+          <div className={`h-1 w-12 ${step >= 2 ? 'bg-amber-500' : 'bg-card'}`}></div>
+          <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 2 ? 'bg-amber-500 text-primary-foreground' : 'bg-card'}`}>
             2
           </div>
-          <div className={`h-1 w-12 ${step >= 3 ? 'bg-amber-500' : 'bg-neutral-800'}`}></div>
-          <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 3 ? 'bg-amber-500 text-neutral-900' : 'bg-neutral-800'}`}>
+          <div className={`h-1 w-12 ${step >= 3 ? 'bg-amber-500' : 'bg-card'}`}></div>
+          <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 3 ? 'bg-amber-500 text-primary-foreground' : 'bg-card'}`}>
             3
           </div>
         </div>
@@ -88,7 +133,7 @@ export function BookingDialog({ open, onOpenChange, services }: BookingDialogPro
                   className={`p-4 rounded-lg border-2 text-left transition-colors ${
                     selectedService === service.title
                       ? 'border-amber-500 bg-amber-500/10'
-                      : 'border-neutral-700 hover:border-neutral-600'
+                      : 'border-card hover:border-card'
                   }`}
                 >
                   <div className="mb-2">{service.title}</div>
@@ -96,11 +141,11 @@ export function BookingDialog({ open, onOpenChange, services }: BookingDialogPro
                 </button>
               ))}
             </div>
-            <div className="flex justify-end mt-6">
+              <div className="flex justify-end mt-6">
               <Button
                 onClick={handleNext}
                 disabled={!selectedService}
-                className="bg-amber-500 hover:bg-amber-600 text-neutral-900"
+                  className="bg-amber-500 hover:bg-amber-600 text-primary-foreground"
               >
                 Next
               </Button>
@@ -114,20 +159,23 @@ export function BookingDialog({ open, onOpenChange, services }: BookingDialogPro
             <h3 className="mb-4">Choose Date & Time</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <div className="text-sm text-neutral-400 mb-2">Select Date</div>
+                <div className="text-sm text-muted mb-2">Select Date</div>
                 <Calendar
                   mode="single"
                   selected={selectedDate}
                   onSelect={setSelectedDate}
                   disabled={(date) => date < new Date() || date.getDay() === 0}
-                  className="rounded-md border border-neutral-700 bg-neutral-800"
+                  className="rounded-md border border-card bg-card"
                 />
               </div>
               <div>
-                <div className="text-sm text-neutral-400 mb-2">Select Time</div>
-                <div className="grid grid-cols-2 gap-2 max-h-80 overflow-y-auto pr-2">
+                <div className="text-sm text-muted mb-2">Select Time</div>
+                <div className="grid grid-cols-2 gap-2 max-h-60 overflow-y-auto pr-2">
                   {timeSlots.map((time) => {
-                    const isBooked = bookedSlots.includes(time);
+                    const isBooked = bookings.some((b) => {
+                      const bDate = new Date(b.dateISO);
+                      return isSameDate(bDate, selectedDate ?? new Date()) && b.time === time;
+                    });
                     return (
                       <button
                         key={time}
@@ -135,10 +183,10 @@ export function BookingDialog({ open, onOpenChange, services }: BookingDialogPro
                         disabled={isBooked}
                         className={`p-2 rounded border text-sm ${
                           selectedTime === time
-                            ? 'border-amber-500 bg-amber-500/10 text-white'
+                            ? 'border-amber-500 bg-amber-500/10 text-card-foreground'
                             : isBooked
-                            ? 'border-neutral-700 bg-neutral-800 text-neutral-600 cursor-not-allowed'
-                            : 'border-neutral-700 hover:border-neutral-600'
+                            ? 'border-card bg-card text-muted cursor-not-allowed'
+                            : 'border-card hover:border-card'
                         }`}
                       >
                         <Clock className="w-3 h-3 inline mr-1" />
@@ -154,14 +202,14 @@ export function BookingDialog({ open, onOpenChange, services }: BookingDialogPro
               <Button
                 onClick={handleBack}
                 variant="outline"
-                className="border-neutral-700 text-white hover:bg-neutral-800"
+                className="border-card text-card-foreground hover:bg-card"
               >
                 Back
               </Button>
               <Button
                 onClick={handleNext}
                 disabled={!selectedDate || !selectedTime}
-                className="bg-amber-500 hover:bg-amber-600 text-neutral-900"
+                className="bg-amber-500 hover:bg-amber-600 text-primary-foreground"
               >
                 Next
               </Button>
@@ -175,12 +223,12 @@ export function BookingDialog({ open, onOpenChange, services }: BookingDialogPro
             <h3 className="mb-4">Your Information</h3>
             
             {/* Booking Summary */}
-            <div className="bg-neutral-800 p-4 rounded-lg mb-6 border border-neutral-700">
-              <div className="text-sm text-neutral-400 mb-2">Booking Summary</div>
+            <div className="bg-card p-4 rounded-lg mb-6 border border-card">
+              <div className="text-sm text-muted mb-2">Booking Summary</div>
               <div className="space-y-1">
-                <div><span className="text-neutral-400">Service:</span> {selectedService}</div>
-                <div><span className="text-neutral-400">Date:</span> {selectedDate?.toLocaleDateString()}</div>
-                <div><span className="text-neutral-400">Time:</span> {selectedTime}</div>
+                <div><span className="text-muted">Service:</span> {selectedService}</div>
+                <div><span className="text-muted">Date:</span> {selectedDate?.toLocaleDateString()}</div>
+                <div><span className="text-muted">Time:</span> {selectedTime}</div>
               </div>
             </div>
 
@@ -195,7 +243,7 @@ export function BookingDialog({ open, onOpenChange, services }: BookingDialogPro
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-2 rounded bg-neutral-800 border border-neutral-700 focus:border-amber-500 focus:outline-none"
+                  className="w-full px-4 py-2 rounded bg-card border border-card focus:border-amber-500 focus:outline-none"
                   placeholder="John Doe"
                 />
               </div>
@@ -209,7 +257,7 @@ export function BookingDialog({ open, onOpenChange, services }: BookingDialogPro
                   required
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full px-4 py-2 rounded bg-neutral-800 border border-neutral-700 focus:border-amber-500 focus:outline-none"
+                  className="w-full px-4 py-2 rounded bg-card border border-card focus:border-amber-500 focus:outline-none"
                   placeholder="(555) 123-4567"
                 />
               </div>
@@ -222,7 +270,7 @@ export function BookingDialog({ open, onOpenChange, services }: BookingDialogPro
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-2 rounded bg-neutral-800 border border-neutral-700 focus:border-amber-500 focus:outline-none"
+                  className="w-full px-4 py-2 rounded bg-card border border-card focus:border-amber-500 focus:outline-none"
                   placeholder="john@example.com"
                 />
               </div>
@@ -232,7 +280,7 @@ export function BookingDialog({ open, onOpenChange, services }: BookingDialogPro
                   rows={3}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full px-4 py-2 rounded bg-neutral-800 border border-neutral-700 focus:border-amber-500 focus:outline-none resize-none"
+                  className="w-full px-4 py-2 rounded bg-card border border-card focus:border-amber-500 focus:outline-none resize-none"
                   placeholder="Any special requests or preferences?"
                 />
               </div>
@@ -241,13 +289,13 @@ export function BookingDialog({ open, onOpenChange, services }: BookingDialogPro
                   type="button"
                   onClick={handleBack}
                   variant="outline"
-                  className="border-neutral-700 text-white hover:bg-neutral-800"
+                  className="border-card text-card-foreground hover:bg-card"
                 >
                   Back
                 </Button>
                 <Button
                   type="submit"
-                  className="bg-amber-500 hover:bg-amber-600 text-neutral-900"
+                  className="bg-amber-500 hover:bg-amber-600 text-primary-foreground"
                 >
                   Confirm Booking
                 </Button>

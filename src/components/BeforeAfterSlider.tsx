@@ -60,7 +60,7 @@ export function BeforeAfterSlider({
           alt={afterLabel}
           className="w-full h-full object-cover"
         />
-        <div className="absolute top-4 right-4 bg-amber-500 text-neutral-900 px-3 py-1 rounded text-sm">
+        <div className="absolute top-4 right-4 bg-amber-500 text-primary-foreground px-3 py-1 rounded text-sm">
           {afterLabel}
         </div>
       </div>
@@ -75,19 +75,19 @@ export function BeforeAfterSlider({
           alt={beforeLabel}
           className="w-full h-full object-cover"
         />
-        <div className="absolute top-4 left-4 bg-neutral-900 text-white px-3 py-1 rounded text-sm">
+        <div className="absolute top-4 left-4 bg-card px-3 py-1 rounded text-sm text-card-foreground">
           {beforeLabel}
         </div>
       </div>
 
       {/* Slider Line */}
       <div
-        className="absolute top-0 bottom-0 w-1 bg-white cursor-col-resize"
+        className="absolute top-0 bottom-0 w-1 bg-card cursor-col-resize"
         style={{ left: `${sliderPosition}%` }}
       >
         {/* Slider Handle */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center">
-          <MoveHorizontal className="w-6 h-6 text-neutral-900" />
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-card rounded-full shadow-lg flex items-center justify-center">
+          <MoveHorizontal className="w-6 h-6 text-card-foreground" />
         </div>
       </div>
     </div>

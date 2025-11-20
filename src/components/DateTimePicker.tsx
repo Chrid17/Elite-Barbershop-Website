@@ -76,7 +76,7 @@ export function DateTimePicker({ value, onChange }: DateTimePickerProps) {
         <Button
           type="button"
           variant="outline"
-          className="bg-white/50 backdrop-blur-sm border-white/20 justify-start"
+          className="bg-card/50 backdrop-blur-sm border-card/20 justify-start"
         >
           <CalendarIcon className="h-4 w-4 mr-2" />
           {value ? (
