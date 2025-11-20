@@ -219,8 +219,8 @@ export default function App() {
                 <Scissors className="w-8 h-8 text-amber-500" />
                 <div className="h-px w-12 bg-amber-500"></div>
               </div>
-              <h1 className="text-5xl md:text-7xl mb-6 text-foreground drop-shadow-lg">Elite Cuts Barbershop</h1>
-              <p className="text-xl md:text-2xl text-muted mb-8 drop-shadow-md">
+              <h1 className="text-5xl md:text-7xl mb-6 text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">Elite Cuts Barbershop</h1>
+              <p className="text-xl md:text-2xl text-white/95 mb-8 drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
                 Where Tradition Meets Modern Style
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
