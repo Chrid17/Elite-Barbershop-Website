@@ -1,9 +1,8 @@
-// tsconfig.json
 {
   "compilerOptions": {
     "target": "ES2020",
     "module": "ESNext",
-    "moduleResolution": "node",   // <- not 'bundler' yet; just use 'node'
+    "moduleResolution": "node",
     "jsx": "react-jsx",
     "strict": true,
     "esModuleInterop": true,
@@ -12,8 +11,8 @@
     "allowSyntheticDefaultImports": true,
     "noEmit": true,
     "isolatedModules": true,
-    "types": ["vite/client"],
-    "ignoreDeprecations": "6.0"
+    "types": ["vite/client"]
   },
+  "ignoreDeprecations": "5.0",
   "include": ["src"]
 }

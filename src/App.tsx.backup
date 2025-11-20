@@ -13,7 +13,7 @@ import { useTheme } from 'next-themes';
 import { toast, Toaster } from 'sonner';
 
 export default function App() {
-  const { theme, setTheme } = useTheme(); // ← real usage keeps next-themes
+  const { theme } = useTheme(); // ← real usage keeps next-themes
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -122,9 +122,9 @@ export default function App() {
   return (
     <>
       <Toaster /> {/* keeps sonner alive */}
-      <div className="min-h-screen bg-background text-foreground">
+      <div className="min-h-screen bg-neutral-900 text-white">
         {/* Navigation */}
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
+        <nav className="fixed top-0 left-0 right-0 z-50 bg-neutral-900/95 backdrop-blur-sm border-b border-neutral-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center gap-2">
@@ -169,7 +169,7 @@ export default function App() {
 
           {/* Mobile Navigation */}
           {mobileMenuOpen && (
-            <div className="md:hidden bg-card border-t border-border">
+            <div className="md:hidden bg-neutral-800 border-t border-neutral-700">
               <div className="px-4 py-3 space-y-3">
                 <button onClick={() => scrollToSection('home')} className="block w-full text-left hover:text-amber-500 transition-colors">
                   Home
@@ -219,8 +219,8 @@ export default function App() {
                 <Scissors className="w-8 h-8 text-amber-500" />
                 <div className="h-px w-12 bg-amber-500"></div>
               </div>
-              <h1 className="text-5xl md:text-7xl mb-6 text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">Elite Cuts Barbershop</h1>
-              <p className="text-xl md:text-2xl text-white/95 mb-8 drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
+              <h1 className="text-5xl md:text-7xl mb-6 text-white drop-shadow-lg">Elite Cuts Barbershop</h1>
+              <p className="text-xl md:text-2xl text-neutral-300 mb-8 drop-shadow-md">
                 Where Tradition Meets Modern Style
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -233,7 +233,7 @@ export default function App() {
                 <Button 
                   onClick={() => scrollToSection('services')}
                   variant="outline"
-                  className="border-white text-foreground hover:bg-white hover:text-neutral-900 px-8 py-6"
+                  className="border-white text-white hover:bg-white hover:text-neutral-900 px-8 py-6"
                 >
                   View Services
                 </Button>
@@ -254,7 +254,7 @@ export default function App() {
         </section>
 
         {/* Features Section */}
-        <section className="py-20 bg-card">
+        <section className="py-20 bg-neutral-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               <motion.div 
@@ -268,7 +268,7 @@ export default function App() {
                   <Users className="w-8 h-8 text-amber-500" />
                 </div>
                 <div className="text-4xl mb-2">5000+</div>
-                <p className="text-muted">Happy Clients</p>
+                <p className="text-neutral-400">Happy Clients</p>
               </motion.div>
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
@@ -281,7 +281,7 @@ export default function App() {
                   <Award className="w-8 h-8 text-amber-500" />
                 </div>
                 <div className="text-4xl mb-2">15+</div>
-                <p className="text-muted">Years Experience</p>
+                <p className="text-neutral-400">Years Experience</p>
               </motion.div>
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
@@ -294,7 +294,7 @@ export default function App() {
                   <Star className="w-8 h-8 text-amber-500" />
                 </div>
                 <div className="text-4xl mb-2">4.9</div>
-                <p className="text-muted">Average Rating</p>
+                <p className="text-neutral-400">Average Rating</p>
               </motion.div>
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
@@ -307,18 +307,18 @@ export default function App() {
                   <ThumbsUp className="w-8 h-8 text-amber-500" />
                 </div>
                 <div className="text-4xl mb-2">100%</div>
-                <p className="text-muted">Satisfaction</p>
+                <p className="text-neutral-400">Satisfaction</p>
               </motion.div>
             </div>
           </div>
         </section>
 
         {/* Services Section */}
-        <section id="services" className="py-20 bg-background">
+        <section id="services" className="py-20 bg-neutral-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl mb-4">Our Services</h2>
-              <p className="text-xl text-muted">Premium grooming services tailored for you</p>
+              <p className="text-xl text-neutral-400">Premium grooming services tailored for you</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -330,11 +330,11 @@ export default function App() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                  <Card className="bg-card border-border hover:border-amber-500 transition-colors h-full">
+                  <Card className="bg-neutral-800 border-neutral-700 hover:border-amber-500 transition-colors h-full">
                     <CardContent className="p-6">
                       <div className="text-amber-500 mb-4">{service.icon}</div>
-                      <h3 className="mb-2 text-foreground">{service.title}</h3>
-                      <p className="text-muted mb-4">{service.description}</p>
+                      <h3 className="mb-2 text-white">{service.title}</h3>
+                      <p className="text-neutral-400 mb-4">{service.description}</p>
                       <div className="text-2xl text-amber-500">{service.price}</div>
                     </CardContent>
                   </Card>
@@ -345,11 +345,11 @@ export default function App() {
         </section>
 
         {/* Before/After Transformations Section */}
-        <section id="transformations" className="py-20 bg-card">
+        <section id="transformations" className="py-20 bg-neutral-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl mb-4">Transformations</h2>
-              <p className="text-xl text-muted">See the difference our expertise makes</p>
+              <p className="text-xl text-neutral-400">See the difference our expertise makes</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -365,7 +365,7 @@ export default function App() {
                 />
                 <div className="mt-4 text-center">
                   <h3 className="mb-2">Classic Haircut & Style</h3>
-                  <p className="text-muted">Modern fade with textured top</p>
+                  <p className="text-neutral-400">Modern fade with textured top</p>
                 </div>
               </motion.div>
 
@@ -381,7 +381,7 @@ export default function App() {
                 />
                 <div className="mt-4 text-center">
                   <h3 className="mb-2">Hair & Beard Combo</h3>
-                  <p className="text-muted">Complete grooming transformation</p>
+                  <p className="text-neutral-400">Complete grooming transformation</p>
                 </div>
               </motion.div>
             </div>
@@ -389,11 +389,11 @@ export default function App() {
         </section>
 
         {/* Gallery Section */}
-        <section id="gallery" className="py-20 bg-background">
+        <section id="gallery" className="py-20 bg-neutral-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl mb-4">Our Work</h2>
-              <p className="text-xl text-muted">Click any image to view full size</p>
+              <p className="text-xl text-neutral-400">Click any image to view full size</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -408,8 +408,8 @@ export default function App() {
                     alt={image.alt}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
-                  <div className="absolute inset-0 bg-background/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <div className="text-foreground text-center">
+                  <div className="absolute inset-0 bg-neutral-900/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <div className="text-white text-center">
                       <div className="text-2xl mb-2">🔍</div>
                       <div>View Full Size</div>
                     </div>
@@ -421,11 +421,11 @@ export default function App() {
         </section>
 
         {/* Team Section */}
-        <section id="team" className="py-20 bg-card">
+        <section id="team" className="py-20 bg-neutral-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl mb-4">Meet Our Team</h2>
-              <p className="text-xl text-muted">Experienced professionals dedicated to your style</p>
+              <p className="text-xl text-neutral-400">Experienced professionals dedicated to your style</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -437,19 +437,19 @@ export default function App() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                  <Card className="bg-background border-border overflow-hidden hover:border-amber-500 transition-colors">
+                  <Card className="bg-neutral-900 border-neutral-700 overflow-hidden hover:border-amber-500 transition-colors">
                     <div className="relative h-80">
                       <ImageWithFallback
                         src={member.image}
                         alt={member.name}
                         className="w-full h-full object-cover"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[var(--card)] via-[var(--card)]/80 to-transparent"></div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 to-transparent"></div>
                     </div>
                     <CardContent className="p-6 -mt-20 relative z-10">
-                      <h3 className="mb-1 text-white drop-shadow-lg">{member.name}</h3>
-                      <p className="text-amber-500 mb-2 drop-shadow-md">{member.role}</p>
-                      <p className="text-foreground font-medium drop-shadow-sm">{member.experience} experience</p>
+                      <h3 className="mb-1 text-white">{member.name}</h3>
+                      <p className="text-amber-500 mb-2">{member.role}</p>
+                      <p className="text-neutral-400">{member.experience} experience</p>
                     </CardContent>
                   </Card>
                 </motion.div>
@@ -459,11 +459,11 @@ export default function App() {
         </section>
 
         {/* Testimonials Section */}
-        <section className="py-20 bg-background">
+        <section className="py-20 bg-neutral-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl mb-4">What Clients Say</h2>
-              <p className="text-xl text-muted">Real reviews from real people</p>
+              <p className="text-xl text-neutral-400">Real reviews from real people</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -473,19 +473,19 @@ export default function App() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
               >
-                <Card className="bg-card border-border h-full">
+                <Card className="bg-neutral-800 border-neutral-700 h-full">
                   <CardContent className="p-6">
                     <div className="flex gap-1 mb-4">
                       {[...Array(5)].map((_, i) => (
                         <Star key={i} className="w-5 h-5 fill-amber-500 text-amber-500" />
                       ))}
                     </div>
-                    <p className="text-muted mb-4">
+                    <p className="text-neutral-300 mb-4">
                       "Best barbershop in town! Marcus always knows exactly what I want. The atmosphere is amazing and the attention to detail is unmatched."
                     </p>
                     <div>
-                      <div className="text-foreground">John Martinez</div>
-                      <div className="text-sm text-muted">Regular Client</div>
+                      <div className="text-white">John Martinez</div>
+                      <div className="text-sm text-neutral-400">Regular Client</div>
                     </div>
                   </CardContent>
                 </Card>
@@ -497,19 +497,19 @@ export default function App() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
-                <Card className="bg-card border-border h-full">
+                <Card className="bg-neutral-800 border-neutral-700 h-full">
                   <CardContent className="p-6">
                     <div className="flex gap-1 mb-4">
                       {[...Array(5)].map((_, i) => (
                         <Star key={i} className="w-5 h-5 fill-amber-500 text-amber-500" />
                       ))}
                     </div>
-                    <p className="text-muted mb-4">
+                    <p className="text-neutral-300 mb-4">
                       "I've been coming here for 3 years and never disappointed. Professional service, skilled barbers, and always leave looking sharp."
                     </p>
                     <div>
-                      <div className="text-foreground">Michael Chen</div>
-                      <div className="text-sm text-muted">Loyal Customer</div>
+                      <div className="text-white">Michael Chen</div>
+                      <div className="text-sm text-neutral-400">Loyal Customer</div>
                     </div>
                   </CardContent>
                 </Card>
@@ -521,19 +521,19 @@ export default function App() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                <Card className="bg-card border-border h-full">
+                <Card className="bg-neutral-800 border-neutral-700 h-full">
                   <CardContent className="p-6">
                     <div className="flex gap-1 mb-4">
                       {[...Array(5)].map((_, i) => (
                         <Star key={i} className="w-5 h-5 fill-amber-500 text-amber-500" />
                       ))}
                     </div>
-                    <p className="text-muted mb-4">
+                    <p className="text-neutral-300 mb-4">
                       "The hot towel shave is an experience! David is a true craftsman. Highly recommend Elite Cuts to anyone looking for quality."
                     </p>
                     <div>
-                      <div className="text-foreground">Robert Williams</div>
-                      <div className="text-sm text-muted">Happy Client</div>
+                      <div className="text-white">Robert Williams</div>
+                      <div className="text-sm text-neutral-400">Happy Client</div>
                     </div>
                   </CardContent>
                 </Card>
@@ -543,11 +543,11 @@ export default function App() {
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="py-20 bg-card">
+        <section id="contact" className="py-20 bg-neutral-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl mb-4">Visit Us</h2>
-              <p className="text-xl text-muted">Book your appointment today</p>
+              <p className="text-xl text-neutral-400">Book your appointment today</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -560,7 +560,7 @@ export default function App() {
                       <MapPin className="w-6 h-6 text-amber-500" />
                     </div>
                     <div>
-                      <div className="text-muted mb-1">Address</div>
+                      <div className="text-neutral-400 mb-1">Address</div>
                       <p>123 Main Street<br />Downtown, NY 10001</p>
                     </div>
                   </div>
@@ -570,7 +570,7 @@ export default function App() {
                       <Phone className="w-6 h-6 text-amber-500" />
                     </div>
                     <div>
-                      <div className="text-muted mb-1">Phone</div>
+                      <div className="text-neutral-400 mb-1">Phone</div>
                       <p>(555) 123-4567</p>
                     </div>
                   </div>
@@ -580,7 +580,7 @@ export default function App() {
                       <Mail className="w-6 h-6 text-amber-500" />
                     </div>
                     <div>
-                      <div className="text-muted mb-1">Email</div>
+                      <div className="text-neutral-400 mb-1">Email</div>
                       <p>info@elitecuts.com</p>
                     </div>
                   </div>
@@ -590,7 +590,7 @@ export default function App() {
                       <Clock className="w-6 h-6 text-amber-500" />
                     </div>
                     <div>
-                      <div className="text-muted mb-1">Hours</div>
+                      <div className="text-neutral-400 mb-1">Hours</div>
                       <p>Monday - Friday: 9am - 8pm<br />
                          Saturday: 9am - 6pm<br />
                          Sunday: 10am - 5pm</p>
@@ -599,9 +599,9 @@ export default function App() {
                 </div>
               </div>
               
-              <div className="bg-background p-8 rounded-lg">
+              <div className="bg-neutral-900 p-8 rounded-lg">
                 <h3 className="mb-4">Quick Booking</h3>
-                <p className="text-muted mb-6">For full booking with time slots, use the button below</p>
+                <p className="text-neutral-400 mb-6">For full booking with time slots, use the button below</p>
                 <Button 
                   onClick={() => setBookingOpen(true)}
                   className="w-full bg-amber-500 hover:bg-amber-600 text-neutral-900 mb-6"
@@ -609,14 +609,14 @@ export default function App() {
                   Open Full Booking System
                 </Button>
                 
-                <div className="border-t border-border pt-6">
+                <div className="border-t border-neutral-800 pt-6">
                   <h4 className="mb-4">Or send us a message</h4>
                   <form className="space-y-4">
                     <div>
                       <label className="block text-sm mb-2">Name</label>
                       <input 
                         type="text" 
-                        className="w-full px-4 py-2 rounded bg-card border border-border focus:border-amber-500 focus:outline-none"
+                        className="w-full px-4 py-2 rounded bg-neutral-800 border border-neutral-700 focus:border-amber-500 focus:outline-none"
                         placeholder="Your name"
                       />
                     </div>
@@ -624,7 +624,7 @@ export default function App() {
                       <label className="block text-sm mb-2">Email</label>
                       <input 
                         type="email" 
-                        className="w-full px-4 py-2 rounded bg-card border border-border focus:border-amber-500 focus:outline-none"
+                        className="w-full px-4 py-2 rounded bg-neutral-800 border border-neutral-700 focus:border-amber-500 focus:outline-none"
                         placeholder="your@email.com"
                       />
                     </div>
@@ -632,7 +632,7 @@ export default function App() {
                       <label className="block text-sm mb-2">Message</label>
                       <textarea 
                         rows={4}
-                        className="w-full px-4 py-2 rounded bg-card border border-border focus:border-amber-500 focus:outline-none resize-none"
+                        className="w-full px-4 py-2 rounded bg-neutral-800 border border-neutral-700 focus:border-amber-500 focus:outline-none resize-none"
                         placeholder="Your message..."
                       />
                     </div>

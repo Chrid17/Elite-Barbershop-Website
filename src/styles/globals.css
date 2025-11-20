@@ -187,3 +187,55 @@
 html {
   font-size: var(--font-size);
 }
+
+/* Hero / hero buttons tweaks to better match the provided dark screenshot */
+#home {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--foreground);
+}
+
+#home .bg-gradient-to-b {
+  background: rgba(0,0,0,0.95) !important;
+  backdrop-filter: blur(4px);
+}
+
+#home h1 {
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.02em;
+  color: var(--color-white, #fff);
+  text-shadow: 0 6px 20px rgba(0,0,0,0.6);
+}
+
+#home p {
+  color: color-mix(in oklab, var(--foreground) 72%, transparent);
+}
+
+/* Utility class for the large orange hero button used in App.tsx */
+.btn-hero {
+  padding: 1rem 2rem;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, var(--accent) 0%, color-mix(in oklab, var(--accent) 85%, black 15%) 100%);
+  color: var(--accent-foreground, #fff);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* Darken the hero image heavily so the background reads as black */
+#home .object-cover {
+  filter: brightness(0.18) saturate(0.9) contrast(0.95);
+  transform: translateZ(0);
+}
+
+/* Make Tailwind amber variables a touch warmer for dark theme */
+:root {
+  --color-amber-500: #ff9f1c;
+  --color-amber-600: #f58c00;
+}
+
+.dark {
+  --color-amber-500: #ff9f1c;
+  --color-amber-600: #f58c00;
+}
