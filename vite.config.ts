@@ -1,10 +1,11 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
+import legacy from '@vitejs/plugin-legacy';
 import path from 'path';
 
 export default defineConfig({
   base: '/Elite-Barbershop-Website/', // corrected to match actual repo name
-  plugins: [react()],
+  plugins: [react(), legacy({ targets: ['defaults', 'not IE 11', 'iOS >= 12', 'Safari >= 12', 'Android >= 7'] })],
   optimizeDeps: {
     include: ['framer-motion'],
   },
